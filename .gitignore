@@ -32,3 +32,6 @@ Thumbs.db
 /.vs/Maps/config/applicationhost.config
 *.testlog
 /.vs/Maps/v17/TestStore/0/testlog.manifest
+.vs/Maps/DesignTimeBuild/.dtbcache.v2
+.vs/Maps/v17/.futdcache.v1
+.vs/Maps/v17/fileList.bin
