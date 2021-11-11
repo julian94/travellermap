@@ -36,3 +36,4 @@ Thumbs.db
 # Mac cruft
 .DS_Store
 
+/.vs/Maps/project-colors.json

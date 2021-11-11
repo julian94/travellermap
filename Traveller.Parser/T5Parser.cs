@@ -48,14 +48,14 @@ public class T5Parser : IParser
         // Todo: Parse Metadata.
     }
 
-    private static bool IsTabDelimited(string header)
+    public static bool IsTabDelimited(string header)
     {
         if ((header.Contains(' ') && header.Contains('\t')) ||
             (!header.Contains(' ') && !header.Contains('\t'))) throw new ArgumentException("A T5 format must be either tab or column delimited.");
         return header.Contains('\t');
     }
 
-    private static List<Field> ParseTabHeader(string header)
+    public static List<Field> ParseTabHeader(string header)
     {
         var parts = header.Split('\t');
         var fields = new List<Field>();
@@ -67,7 +67,7 @@ public class T5Parser : IParser
 
         return fields;
     }
-    private static List<(Field, int)> ParseColumnHeader(string header, string headerDashes)
+    public static List<(Field, int)> ParseColumnHeader(string header, string headerDashes)
     {
         /* Example
             Hex  Name                 UWP       Remarks                   {Ix}   (Ex)    [Cx]   N    B  Z PBG W  A    Stellar       
@@ -88,7 +88,7 @@ public class T5Parser : IParser
         return fields;
     }
 
-    private static World ParseLine(Dictionary<Field, string> parts)
+    public static World ParseLine(Dictionary<Field, string> parts)
     {
         var world = new World()
         {
@@ -102,7 +102,7 @@ public class T5Parser : IParser
         return world;
     }
 
-    private enum Field
+    public enum Field
     {
         Sector,
         SS,
