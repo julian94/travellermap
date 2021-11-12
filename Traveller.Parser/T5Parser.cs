@@ -90,11 +90,10 @@ public class T5Parser : IParser
 
     public static World ParseLine(Dictionary<Field, string> parts)
     {
-        var world = new World()
+        var world = new World(new Position(parts[Field.Hex]))
         {
             Name = parts[Field.Name],
             Uwp = new UWP(parts[Field.UWP]),
-            Position = new Position(parts[Field.Hex]),
             GasGiants = 0,
             TravelCode = parts[Field.Zone] == " " ? TravelCode.G : Enum.Parse<TravelCode>(parts[Field.Zone]),
         };

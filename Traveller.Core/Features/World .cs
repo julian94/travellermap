@@ -5,10 +5,15 @@ public class World
 {
     public string? Name { get; init; }
     public UWP? Uwp { get; init; }
-    public Position? Position {  get; init; }
+    public Position Position {  get; init; }
     public TravelCode? TravelCode { get; init; }
 
     public int? GasGiants { get; init; }
+
+    public World(Position position)
+    {
+        Position = position;
+    }
 
     public virtual bool Equals(World world) =>
         Name == world.Name &&
