@@ -7,23 +7,23 @@ public class T5Parser : IParser
     public static bool TryParseSector(string inputSector, string? inputMetadata, out Sector result)
     {
         /* Example header and first line, NOT AUTHORATIVE!
-         * Fields may appear in ANY ORDER, though consistent on a file to file basis.
+         * Fields may appear in ANY ORDER, though consistent on a file to file basis due to there only being one header.
+         * This means that one should NEVER simply concatenate multiple sector files.
          * Sector	SS	Hex     Name	UWP	        Bases	Remarks	    Zone	PBG	    Allegiance	Stars	    {Ix}	(Ex)	[Cx]	Nobility	W	RU
          * Troj	    A	0103	Taltern	E530240-6	N	    De Lo Po	A	    202	    NaHu	    M2 V M2 V	{ -3 }	(410-5)	[1111]	            7   0
         */
         var parts = new List<string>(inputSector.Split('\n')); // Note both LF and CR+LF are valid line endings. This might not catch both types.
-        var isTabDelimited = IsTabDelimited(parts[0]);
 
         result = new Sector();
         List<Dictionary<Field, string>> worldPartList;
 
-        if (isTabDelimited)
+        if (IsTabDelimited(parts[0]))
         {
-            worldPartList = ParseTabWorlds(parts);
+            worldPartList = TokeniseTabWorlds(parts);
         }
         else
         {
-            worldPartList = ParseColumnWorlds(parts);
+            worldPartList = TokeniseColumnWorlds(parts);
         }
 
         foreach (var world in worldPartList)
@@ -37,26 +37,21 @@ public class T5Parser : IParser
         return true; // Return false at an earlier point if an error occurs.
     }
 
-    public static List<Dictionary<Field, string>> ParseTabWorlds(List<string> parts)
+    public static List<Dictionary<Field, string>> TokeniseTabWorlds(List<string> parts)
     {
         var worldPartList = new List<Dictionary<Field, string>>();
         var headers = ParseTabHeader(parts[0]);
 
         for (var i = 1; i < parts.Count && !parts[i].Equals(string.Empty); i++)
         {
-            var lineParts = parts[i].Split('\t');
-            var worldParts = new Dictionary<Field, string>();
-            for (var j = 0; j < headers.Count; j++)
-            {
-                worldParts[headers[j]] = lineParts[j];
-            }
+            var worldParts = TokeniseTabWorld(headers, parts[i]);
             worldPartList.Add(worldParts);
         }
 
         return worldPartList;
     }
 
-    public static Dictionary<Field, string> ParseTabWorld(List<Field> headers, string line)
+    public static Dictionary<Field, string> TokeniseTabWorld(List<Field> headers, string line)
 {
         var lineParts = line.Split('\t');
         var worldParts = new Dictionary<Field, string>();
@@ -67,7 +62,7 @@ public class T5Parser : IParser
         return worldParts;
     }
 
-    public static List<Dictionary<Field, string>> ParseColumnWorlds(List<string> parts)
+    public static List<Dictionary<Field, string>> TokeniseColumnWorlds(List<string> parts)
     {
         var worldPartList = new List<Dictionary<Field, string>>();
         var headers = ParseColumnHeader(parts[0], parts[1]);
@@ -75,14 +70,14 @@ public class T5Parser : IParser
         for (var i = 1; i < parts.Count && !string.IsNullOrWhiteSpace(parts[i]); i++)
         {
             var line = parts[i];
-            var worldParts = ParseColumnWorld(headers, line);
+            var worldParts = TokeniseColumnWorld(headers, line);
             worldPartList.Add(worldParts);
         }
 
         return worldPartList;
     }
 
-    public static Dictionary<Field, string> ParseColumnWorld(List<(Field, int)> headers, string line)
+    public static Dictionary<Field, string> TokeniseColumnWorld(List<(Field, int)> headers, string line)
     {
         var worldParts = new Dictionary<Field, string>();
         var startIndex = 0;
@@ -148,8 +143,8 @@ public class T5Parser : IParser
         {
             Name = parts[Field.Name],
             Uwp = new UWP(parts[Field.UWP]),
-            GasGiants = 0,
-            TravelCode = parts[Field.Zone] == " " ? TravelCode.G : Enum.Parse<TravelCode>(parts[Field.Zone]),
+            GasGiants = string.IsNullOrWhiteSpace(parts[Field.PBG]) ? 0 : int.Parse(parts[Field.PBG][2..]),
+            TravelCode = string.IsNullOrWhiteSpace(parts[Field.Zone]) ? TravelCode.G : Enum.Parse<TravelCode>(parts[Field.Zone]),
         };
 
         return world;
@@ -162,7 +157,8 @@ public class T5Parser : IParser
         .TrimStart('(')
         .TrimEnd(')')
         .TrimEnd(']')
-        .TrimEnd('}');
+        .TrimEnd('}')
+        .Trim();
 
 }
 public enum Field

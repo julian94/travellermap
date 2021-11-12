@@ -17,7 +17,7 @@ public class World
 
     public virtual bool Equals(World world) =>
         Name == world.Name &&
-        Uwp == world.Uwp &&
+        Uwp.Equals(world.Uwp) &&
         Position == world.Position &&
         TravelCode == world.TravelCode &&
         GasGiants == world.GasGiants;
@@ -47,7 +47,7 @@ public class UWP
     public UWP(string raw)
     {
         if (!Regex.IsMatch(raw, "[ABCDEX][0-9A-Z]{6}-[0-9A-Z]")) throw new ArgumentException("Invalid UWP");
-        var parts = raw.Replace("-", string.Empty).Split(string.Empty);
+        var parts = raw.Replace("-", string.Empty).ToCharArray();
         var parsedParts = parts.Select(p => new HexValue(p)).ToArray();
         Starport    = parsedParts[0];
         Size        = parsedParts[1];
@@ -58,6 +58,9 @@ public class UWP
         Law         = parsedParts[6];
         Tech        = parsedParts[7];
     }
+
+    public virtual bool Equals(UWP other)
+        => this.ToString().Equals(other.ToString());
 
     public override string ToString()
     {
