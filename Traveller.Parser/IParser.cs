@@ -1,7 +1,11 @@
 ﻿namespace Traveller.Parser;
 public interface IParser
 {
-    public bool CanParse(string extension);
+    public static bool CanParse(string extension) => false;
 
-    public bool TryParseSector(string inputSector, string? inputMetadata, out Sector result);
+    public static bool TryParseSector(string inputSector, string? inputMetadata, out Sector result)
+    {
+        result = null;
+        return false;
+    }
 }
