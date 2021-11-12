@@ -37,3 +37,4 @@ Thumbs.db
 .DS_Store
 
 /.vs/Maps/project-colors.json
+*.v2
