@@ -29,7 +29,7 @@ public record struct UWP
     }
 
     public bool Equals(UWP other)
-        => this.ToString().Equals(other.ToString());
+        => ToString().Equals(other.ToString());
 
     public override string ToString()
     {

@@ -15,7 +15,7 @@ public class Sector : IWorldHolder
         }
     }
 
-    public void AddWorld(World world)
+    public void AddWorld(StarSystem system)
     {
         // Ensure Position is inside Sector
         // Add to Worlds

@@ -17,4 +17,14 @@ public class CultureTests
         Assert.AreEqual(new EHex("G"), culture.Symbols);
     }
 
+    [Test]
+    public void TestEquality()
+    {
+        var raw = "[657G]";
+        var a = new Culture(raw);
+        var b = new Culture(raw);
+
+        Assert.IsTrue(a == b);
+        Assert.AreEqual(a, b);
+    }
 }

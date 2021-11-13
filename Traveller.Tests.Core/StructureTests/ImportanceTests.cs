@@ -28,4 +28,14 @@ public class ImportanceTests
         Assert.IsTrue(importanceB < importanceA);
     }
 
+    [Test]
+    public void TestEquality()
+    {
+        var raw = "{ 1 }";
+        var importanceA = new Importance(raw);
+        var importanceB = new Importance(raw);
+
+        Assert.IsTrue(importanceA == importanceB);
+        Assert.AreEqual(importanceA, importanceB);
+    }
 }

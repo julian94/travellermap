@@ -59,7 +59,7 @@ public class T5Tests
         Assert.AreEqual(expected, T5Parser.StripExtensionClosures(input));
     }
 
-    private static (string, string, Dictionary<Field, string>, World) GetTabWorld() =>
+    private static (string, string, Dictionary<Field, string>, StarSystem) GetTabWorld() =>
         (
             "Sector	SS	Hex	Name	UWP	Bases	Remarks	Zone	PBG	Allegiance	Stars	{Ix}	(Ex)	[Cx]	Nobility	W	RU",
             "Troj	K	2223	Drinax	A43645A-E		Ni		714	NaHu	M1 V	{ 1 }	(B34+3)	[657G]		9	396",
@@ -83,15 +83,23 @@ public class T5Tests
                 { Field.W, "9" },
                 { Field.RU, "396"},
             },
-            new World(new Position("2223"))
+            new StarSystem(
+                new Position("2223"),
+                new World()
+                {
+                    Name = "Drinax",
+                    Uwp = new UWP("A43645A-E"),
+                    TravelCode = TravelCode.G,
+                    Importance = new Importance("{ 1 }"),
+                    Economic = new Economic("(B34+3)"),
+                    Culture = new Culture("[657G]"),
+                    PopulationModifier = 7,
+                }
+            )
             {
-                Name = "Drinax",
+                Stars = "M1 V",
+                PlanetoidBelts = 1,
                 GasGiants = 4,
-                TravelCode = TravelCode.G,
-                Uwp = new UWP("A43645A-E"),
-                Importance = new Importance("{ 1 }"),
-                Economic = new Economic("(B34+3)"),
-                Culture = new Culture("[657G]"),
             }
         );
 
@@ -137,17 +145,19 @@ public class T5Tests
     [Test]
     public void TestParseWorld()
     {
-        (_, _, var worldParts, var world) = GetTabWorld();
-        var parsedWorld = T5Parser.ParseLine(worldParts);
-        Assert.IsNotNull(parsedWorld);
+        (_, _, var worldParts, var system) = GetTabWorld();
+        var parsedSystem = T5Parser.ParseLine(worldParts);
+        Assert.IsNotNull(parsedSystem);
 
-        Assert.AreEqual(world.Uwp.ToString(), parsedWorld.Uwp.ToString());
-        Assert.IsTrue(world.Uwp.Equals(parsedWorld.Uwp));
+        Assert.IsTrue(system.Equals(parsedSystem));
 
-        Assert.IsTrue(world.Equals(parsedWorld));
+        Assert.AreEqual(system.MainWorld.Uwp.ToString(), parsedSystem.MainWorld.Uwp.ToString());
+        Assert.IsTrue(system.MainWorld.Uwp.Equals(parsedSystem.MainWorld.Uwp));
 
-        Assert.AreEqual(world.Importance, parsedWorld.Importance);
-        Assert.AreEqual(world.Economic, parsedWorld.Economic);
-        Assert.AreEqual(world.Culture, parsedWorld.Culture);
+        Assert.IsTrue(system.MainWorld.Equals(parsedSystem.MainWorld));
+
+        Assert.AreEqual(system.MainWorld.Importance, parsedSystem.MainWorld.Importance);
+        Assert.AreEqual(system.MainWorld.Economic, parsedSystem.MainWorld.Economic);
+        Assert.AreEqual(system.MainWorld.Culture, parsedSystem.MainWorld.Culture);
     }
 }

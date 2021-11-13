@@ -17,4 +17,14 @@ public class EconomyTests
         Assert.AreEqual(3, economic.Efficiency);
     }
 
+    [Test]
+    public void TestEquality()
+    {
+        var raw = "(B34+3)";
+        var a = new Economic(raw);
+        var b = new Economic(raw);
+
+        Assert.IsTrue(a == b);
+        Assert.AreEqual(a, b);
+    }
 }

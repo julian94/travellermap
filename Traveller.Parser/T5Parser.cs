@@ -137,17 +137,38 @@ public class T5Parser : IParser
         return fields;
     }
 
-    public static World ParseLine(Dictionary<Field, string> parts)
+    public static StarSystem? ParseLine(Dictionary<Field, string> parts)
     {
-        var world = new World(new Position(parts[Field.Hex]))
-        {
-            Name = parts[Field.Name],
-            Uwp = new UWP(parts[Field.UWP]),
-            GasGiants = string.IsNullOrWhiteSpace(parts[Field.PBG]) ? 0 : int.Parse(parts[Field.PBG][2..]),
-            TravelCode = string.IsNullOrWhiteSpace(parts[Field.Zone]) ? TravelCode.G : Enum.Parse<TravelCode>(parts[Field.Zone]),
-        };
+        if (!parts.ContainsKey(Field.Hex)) return null;
 
-        return world;
+        var system = new StarSystem(new Position(parts[Field.Hex]), new World());
+        
+        if (parts.TryGetValue(Field.Name, out var name)) system.MainWorld.Name = name;
+
+        if (parts.TryGetValue(Field.UWP, out var uwp)) system.MainWorld.Uwp = new UWP(uwp);
+
+        if (parts.TryGetValue(Field.Zone, out var zone)) 
+            system.MainWorld.TravelCode = string.IsNullOrWhiteSpace(zone) ? 
+                TravelCode.G : Enum.Parse<TravelCode>(zone);
+        
+        if (parts.TryGetValue(Field.Ix, out var ix)) system.MainWorld.Importance = new Importance(ix);
+        if (parts.TryGetValue(Field.Cx, out var cx)) system.MainWorld.Culture = new Culture(cx);
+        if (parts.TryGetValue(Field.Ex, out var ex)) system.MainWorld.Economic = new Economic(ex);
+
+        if (parts.TryGetValue(Field.Stars, out var stars)) system.Stars = stars;
+
+        if (parts.TryGetValue(Field.PBG, out var pbg))
+        {
+            var p = int.Parse(pbg[0].ToString());
+            var b = int.Parse(pbg[1].ToString());
+            var g = int.Parse(pbg[2].ToString());
+
+            system.MainWorld.PopulationModifier = p;
+            system.PlanetoidBelts = b;
+            system.GasGiants = g;
+        }
+
+        return system;
     }
 
     public static string StripExtensionClosures(string field) =>
