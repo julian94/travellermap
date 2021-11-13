@@ -75,7 +75,7 @@ public record struct Position
     public bool IsInSubSector(Position subSector) => (subSector + ToSubSector()) == this;
 
     public static Position operator +(Position a, Position B) => new(a.X + B.X, a.Y + B.Y);
-    public bool Equals(Position a, Position b) => a.X == b.X &&  a.Y == b.Y;
+    public bool Equals(Position other) => X == other.X &&  Y == other.Y;
 
     public static Position CreateSectorFromOffset(int x, int y)
     {

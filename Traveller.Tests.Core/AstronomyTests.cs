@@ -2,7 +2,7 @@ using NUnit.Framework;
 using Traveller.Core.Features;
 using Traveller.Core.Util;
 
-namespace TravellerCoreTests;
+namespace Traveller.Core.Tests;
 public class AstronomyTests
 {
     [Test]
