@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace TravellerRenderer;
+namespace Traveller.Renderer;
 public class TextRenderer
 {
     public static string Name = "Text Grid Renderer";
