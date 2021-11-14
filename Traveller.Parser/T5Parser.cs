@@ -31,6 +31,7 @@ public class T5Parser : IParser
         {
             // Add worlds to sector.
             if (TryParseLine(world, out var system)) result.AddStarSystem(system);
+            // Todo: Else note down the error or fail outright.
         }
 
         // Todo: Parse Metadata.
