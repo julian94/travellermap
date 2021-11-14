@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Sector>
+  <Name>Omicus</Name>
+  <Credits>
+    <![CDATA[
+      <b>Omicus</b> sector was designed by Ade Stewart as part of Where The Stars End.
+
+      The data provided for the sector includes no social details: the region has been remotely surveyed, which has provided extensive physical information about the stars, features, and worlds that lie within it.
+    ]]>
+  </Credits>
+  <Subsectors>
+    <Subsector Index="O">Vacuous</Subsector>
+    <Subsector Index="P">Jannasta</Subsector>
+  </Subsectors>
+  <Labels>
+    <!-- Rift Names -->
+    <Label Hex="2517" Color="gray" Size="large">Cauda Rift</Label>
+    <Label Hex="2231" Color="gray">Little Split</Label>
+  </Labels>
+  <Borders>
+    <Border Allegiance="Bw" ShowLabel="false">2041 2141 2140 2239 2339 2439 2540 2541 2441 2341 2241 2141 2041 </Border>
+    <Border Allegiance="Dr" ShowLabel="false">2837 2937 2936 3035 3136 3236 3336 3337 3338 3339 3340 3341 3241 3141 3041 2941 2940 2839 2838 2837 </Border>
+  </Borders>
+  <Allegiances>
+    <Allegiance Code="Bw">Bone Worlds</Allegiance>
+    <Allegiance Code="Dr">Dominion of Ruins</Allegiance>
+  </Allegiances>
+  <Stylesheet>
+    border.Bw { color: green; style: dotted }
+    border.Dr { color: blue; style: dotted }
+  </Stylesheet>
+</Sector>

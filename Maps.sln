@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Traveller.Tests.Core", "Tra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Traveller.Renderer", "Traveller.Renderer\Traveller.Renderer.csproj", "{4D7C0D8F-5910-4FE1-8620-EB0F84716C48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traveller.Tests.Parser", "Traveller.Tests.Parser\Traveller.Tests.Parser.csproj", "{FA51AE32-6FC3-49D4-97E9-AED5497B21FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Traveller.Tests.Parser", "Traveller.Tests.Parser\Traveller.Tests.Parser.csproj", "{FA51AE32-6FC3-49D4-97E9-AED5497B21FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traveller.Data", "Traveller.Data\Traveller.Data.csproj", "{CC2B93B1-165F-4BD8-A678-7FD120324B5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{FA51AE32-6FC3-49D4-97E9-AED5497B21FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA51AE32-6FC3-49D4-97E9-AED5497B21FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA51AE32-6FC3-49D4-97E9-AED5497B21FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC2B93B1-165F-4BD8-A678-7FD120324B5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC2B93B1-165F-4BD8-A678-7FD120324B5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC2B93B1-165F-4BD8-A678-7FD120324B5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC2B93B1-165F-4BD8-A678-7FD120324B5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

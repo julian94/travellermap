@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Sector>
+  <Routes>
+    <Route Start="2240" End="2338" />
+  </Routes>
+
+  <Borders>
+     <Border Color="Blue" Allegiance="Rr">2240 2338</Border>
+  </Borders>
+
+  <Allegiances>
+     <Allegiance Code="Rr">Republic of Regina</Allegiance>
+  </Allegiances>
+
+</Sector>

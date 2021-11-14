@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Sector>
+  <Name>Fallow</Name>
+  <Credits>
+    <![CDATA[
+      <b>Fallow</b> sector was designed by Ade Stewart as part of the Distant Fringe.
+    ]]>
+  </Credits>
+  <Subsectors>
+    <Subsector Index="L">Colsarin</Subsector>
+    <Subsector Index="O">Tzura</Subsector>
+    <Subsector Index="P">Nambe</Subsector>
+  </Subsectors>
+  <Labels>
+    <!-- Rifts -->
+    <Label Hex="1628" Color="gray" Size="large">Moat Rifts</Label>
+  </Labels>
+</Sector>

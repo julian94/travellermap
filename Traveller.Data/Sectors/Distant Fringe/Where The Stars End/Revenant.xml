@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Sector>
+  <Name>Revenant</Name>
+  <Credits>
+    <![CDATA[
+      <b>Revenant</b> sector was designed by Ade Stewart as part of Where The Stars End.
+
+      The data provided for the sector includes no social details: the region has been remotely surveyed, which has provided extensive physical information about the stars, features, and worlds that lie within it.
+    ]]>
+  </Credits>
+  <Labels>
+    <!-- Features Names -->
+    <Label Hex="1602" Color="gray" Size="large">Inner Void</Label>
+    <Label Hex="0621" Color="gray" Size="large">Laurentine&#x0a;Gulf</Label>
+    <Label Hex="2422" Color="gray">Halfdown Divide</Label>
+    <Label Hex="1336" Color="gray">Bight of Burda</Label>
+    <Label Hex="2739" Color="gray">RSS&#x0a;Rv2738</Label>
+  </Labels>
+</Sector>
