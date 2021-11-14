@@ -1,6 +1,4 @@
-﻿using Traveller.Core.Features.Structures;
-
-namespace Traveller.Core.Features;
+﻿namespace Traveller.Core.Features;
 
 public class StarSystem
 {
