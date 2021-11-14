@@ -17,6 +17,7 @@ public class StarSystem
 
     public string? Stars { get; set; }
     public int? PlanetoidBelts { get; set; }
+    public int? Worlds { get; set; }
     public int? GasGiants { get; set; }
 
     public virtual bool Equals(StarSystem other) =>
@@ -25,5 +26,6 @@ public class StarSystem
         OtherWorlds == other.OtherWorlds &&
         Stars == other.Stars &&
         PlanetoidBelts == other.PlanetoidBelts &&
+        Worlds == other.Worlds &&
         GasGiants == other.GasGiants;
 }

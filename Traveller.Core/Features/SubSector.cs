@@ -7,4 +7,11 @@ public class SubSector : IWorldHolder
     public List<StarSystem> StarSystems { get; init; }
 
     public Position Position { get; init; }
+
+    public SubSector(Position position, Metadata? metadata = null)
+    {
+        Position = position;
+        Metadata = metadata ?? new Metadata();
+        StarSystems = new List<StarSystem>();
+    }
 }

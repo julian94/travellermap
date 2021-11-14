@@ -70,9 +70,17 @@ public record struct Position
         return false;
     }
 
-    public bool IsInSector(Position sector) => (sector + ToSector()) == this;
-    public bool IsInQuadrant(Position quadrant) => (quadrant + ToQuadrant()) == this;
-    public bool IsInSubSector(Position subSector) => (subSector + ToSubSector()) == this;
+    public bool IsInSector(Position sector) => 
+        (Math.Abs(sector.X - X) < Constants.Dimensions.SectorWidth ) &&
+        (Math.Abs(sector.Y - Y) < Constants.Dimensions.SectorHeight);
+
+    public bool IsInQuadrant(Position quadrant) =>
+        (Math.Abs(quadrant.X - X) < Constants.Dimensions.QuadrantWidth) &&
+        (Math.Abs(quadrant.Y - Y) < Constants.Dimensions.QuadrantHeight);
+
+    public bool IsInSubSector(Position subSector) =>
+        (Math.Abs(subSector.X - X) < Constants.Dimensions.SubSectorWidth) &&
+        (Math.Abs(subSector.Y - Y) < Constants.Dimensions.SubSectorHeight);
 
     public static Position operator +(Position a, Position B) => new(a.X + B.X, a.Y + B.Y);
     public bool Equals(Position other) => X == other.X &&  Y == other.Y;

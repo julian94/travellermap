@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using Traveller.Core.Features;
 using Traveller.Core.Features.Structures;
@@ -34,6 +35,24 @@ public class T5Tests
     {
         Assert.IsTrue(T5Parser.TryParseSector(Data, Metadata, out var sector));
         Assert.IsNotNull(sector);
+    }
+
+    [Test]
+    public void TestSectorIsCorrect()
+    {
+        Assert.IsTrue(T5Parser.TryParseSector(Data, Metadata, out var sector));
+        Assert.IsNotNull(sector);
+
+        Assert.AreEqual(4, sector.Quadrants.Count);
+        Assert.AreEqual(16, sector.SubSectors.Count);
+
+        Assert.AreEqual(327, sector.StarSystems.Count);
+
+        var picard = (from system in sector.StarSystems where system.MainWorld.Name == "Picard" select system).First();
+
+        Assert.IsNotNull(picard);
+        Assert.AreEqual("D679646-7", picard.MainWorld.Uwp.ToString());
+        Assert.AreEqual("0417", picard.Position.ToString());
     }
 
     [Test]
@@ -99,6 +118,7 @@ public class T5Tests
             {
                 Stars = "M1 V",
                 PlanetoidBelts = 1,
+                Worlds = 9,
                 GasGiants = 4,
             }
         );
@@ -146,7 +166,9 @@ public class T5Tests
     public void TestParseWorld()
     {
         (_, _, var worldParts, var system) = GetTabWorld();
-        var parsedSystem = T5Parser.ParseLine(worldParts);
+
+        Assert.IsTrue(T5Parser.TryParseLine(worldParts, out var parsedSystem));
+
         Assert.IsNotNull(parsedSystem);
 
         Assert.IsTrue(system.Equals(parsedSystem));

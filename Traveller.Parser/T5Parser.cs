@@ -14,7 +14,8 @@ public class T5Parser : IParser
         */
         var parts = new List<string>(inputSector.Split('\n')); // Note both LF and CR+LF are valid line endings. This might not catch both types.
 
-        result = new Sector();
+        result = new Sector(new Position(1,1)); // Todo: Get actual sectorposition.
+
         List<Dictionary<Field, string>> worldPartList;
 
         if (IsTabDelimited(parts[0]))
@@ -29,7 +30,7 @@ public class T5Parser : IParser
         foreach (var world in worldPartList)
         {
             // Add worlds to sector.
-            result.AddWorld(ParseLine(world));
+            if (TryParseLine(world, out var system)) result.AddStarSystem(system);
         }
 
         // Todo: Parse Metadata.
@@ -137,11 +138,15 @@ public class T5Parser : IParser
         return fields;
     }
 
-    public static StarSystem? ParseLine(Dictionary<Field, string> parts)
+    public static bool TryParseLine(Dictionary<Field, string> parts, out StarSystem? system)
     {
-        if (!parts.ContainsKey(Field.Hex)) return null;
+        if (!parts.ContainsKey(Field.Hex))
+        {
+            system = null;
+            return false;
+        }
 
-        var system = new StarSystem(new Position(parts[Field.Hex]), new World());
+        system = new StarSystem(new Position(parts[Field.Hex]), new World());
         
         if (parts.TryGetValue(Field.Name, out var name)) system.MainWorld.Name = name;
 
@@ -157,6 +162,8 @@ public class T5Parser : IParser
 
         if (parts.TryGetValue(Field.Stars, out var stars)) system.Stars = stars;
 
+        if (parts.TryGetValue(Field.W, out var worlds)) system.Worlds = int.Parse(worlds);
+
         if (parts.TryGetValue(Field.PBG, out var pbg))
         {
             var p = int.Parse(pbg[0].ToString());
@@ -168,7 +175,7 @@ public class T5Parser : IParser
             system.GasGiants = g;
         }
 
-        return system;
+        return true;
     }
 
     public static string StripExtensionClosures(string field) =>
